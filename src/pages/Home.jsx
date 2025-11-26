@@ -36,7 +36,7 @@ const Home = () => {
       .to(subtitleRef.current, {
         duration: 2,
         text: {
-          value: "TRANSCENDING BOUNDARIES WITH HOLOGRAPHIC INTERFACES AND QUANTUM COMPUTING.",
+          value: "Blending imagination with technology to build immersive, futuristic digital experiences.",
           delimiter: ""
         },
         ease: "none",
@@ -170,22 +170,9 @@ const Home = () => {
           <div className="ui-hex hex-1"></div>
           <div className="ui-hex hex-2"></div>
           <div className="ui-ring ring-1"></div>
-          <div className="ui-circuit circuit-1"></div>
-        </div>
-
-        {/* Content Layer */}
-        <div ref={contentRef} className="hero-content">
-          <h1 ref={titleRef} className="hero-title">
-            THE FUTURE.<br />REINVENTED.
-          </h1>
-          <p ref={subtitleRef} className="hero-subtitle"></p>
-          <div className="hero-actions">
-            <Button variant="primary">INITIALIZE SYSTEM</Button>
-          </div>
         </div>
       </section>
 
-      {/* Tech Highlights */}
       <section className="tech-highlights">
         <div className="section-header">
           <h2 className="neon-text-blue">CORE TECHNOLOGIES</h2>

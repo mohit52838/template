@@ -77,7 +77,11 @@ const Partners = () => {
       <div className="neural-bg">
         <svg ref={svgRef} width="100%" height="100%"></svg>
       </div>
-      <h1 className="page-title glitch-effect" data-text="STRATEGIC ALLIANCES">STRATEGIC ALLIANCES</h1>
+      <h1 className="page-title glitch-effect" data-text="Collaborations">Collaborations</h1>
+
+      <p style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 50px', color: '#ccc', fontSize: '1.2rem' }}>
+        I collaborate with developers, designers, and creative minds working on futuristic, experimental, and interactive digital products. My focus is on projects that push boundaries and explore new visual languages.
+      </p>
 
       {/* 3D Logo Wall */}
       <div className="logo-wall-container">

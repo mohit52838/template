@@ -20,7 +20,8 @@ const Footer = () => {
           <a href="#" className="social-icon">GH</a>
         </div>
         <div className="footer-copy">
-          &copy; 2025 NeonTech Industries. All rights reserved.
+          &copy; 2025 Mohit Patil — Futuristic Web Experiences.<br />
+          Crafted with passion, neon, and a lot of caffeine.
         </div>
       </div>
       <style jsx>{`

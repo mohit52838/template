@@ -25,7 +25,8 @@ const Contact = () => {
 
   return (
     <div className="page-container">
-      <h1 className="page-title glitch-effect" data-text="ESTABLISH UPLINK">ESTABLISH UPLINK</h1>
+      <h1 className="page-title glitch-effect" data-text="Initiate Contact Protocol">Initiate Contact Protocol</h1>
+      <p style={{ textAlign: 'center', color: '#aaa', marginBottom: '40px' }}>Let’s build something futuristic together.</p>
 
       <div className="contact-layout">
         {/* Terminal Form */}
@@ -48,20 +49,20 @@ const Contact = () => {
             <form className="terminal-form" onSubmit={(e) => e.preventDefault()}>
               <div className="input-group">
                 <input type="text" className="terminal-input" placeholder=" " required />
-                <label className="floating-label">&gt; ID_NAME:</label>
+                <label className="floating-label">&gt; Name:</label>
                 <div className="input-glow"></div>
               </div>
               <div className="input-group">
                 <input type="email" className="terminal-input" placeholder=" " required />
-                <label className="floating-label">&gt; CONTACT_FREQ:</label>
+                <label className="floating-label">&gt; Email:</label>
                 <div className="input-glow"></div>
               </div>
               <div className="input-group">
                 <textarea rows="4" className="terminal-input" placeholder=" " required></textarea>
-                <label className="floating-label">&gt; DATA_PACKET:</label>
+                <label className="floating-label">&gt; Message:</label>
                 <div className="input-glow"></div>
               </div>
-              <Button variant="primary" className="send-btn">TRANSMIT DATA</Button>
+              <Button variant="primary" className="send-btn">Transmit Message</Button>
             </form>
           </div>
         </div>

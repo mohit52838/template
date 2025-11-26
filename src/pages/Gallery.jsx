@@ -24,7 +24,7 @@ const Gallery = () => {
 
   return (
     <div className="page-container">
-      <h1 className="page-title glitch-effect" data-text="VISUAL ARCHIVE">VISUAL ARCHIVE</h1>
+      <h1 className="page-title glitch-effect" data-text="Gallery">Gallery</h1>
 
       <div ref={gridRef} className="masonry-grid">
         {images.map((img) => (

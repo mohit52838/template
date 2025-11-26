@@ -8,15 +8,13 @@ const Projects = () => {
   const gridRef = useRef(null);
 
   const projects = [
-    { id: 1, title: "Cyber City", category: "VR", img: "https://images.unsplash.com/photo-1515630278258-407f66498911?q=80&w=1000&auto=format&fit=crop" },
-    { id: 2, title: "Neon Grid", category: "BLOCKCHAIN", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop" },
-    { id: 3, title: "Holo-UI", category: "UI/UX", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop" },
-    { id: 4, title: "Quantum Net", category: "SECURITY", img: "https://images.unsplash.com/photo-1558494949-efdeb6bf80d1?q=80&w=1000&auto=format&fit=crop" },
-    { id: 5, title: "AI Core", category: "AI", img: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?q=80&w=1000&auto=format&fit=crop" },
-    { id: 6, title: "Space Link", category: "NETWORK", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop" },
+    { id: 1, title: "Neon Portfolio V2", category: "React", img: "https://images.unsplash.com/photo-1515630278258-407f66498911?q=80&w=1000&auto=format&fit=crop", desc: "Cyber Interface with TRON aesthetics." },
+    { id: 2, title: "Mandala Maker", category: "Creative", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop", desc: "Symmetry Art Generator using p5.js." },
+    { id: 3, title: "SmartConnect", category: "App", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop", desc: "Digital Empowerment Platform." },
+    { id: 4, title: "Disaster Mgmt", category: "Web App", img: "https://images.unsplash.com/photo-1558494949-efdeb6bf80d1?q=80&w=1000&auto=format&fit=crop", desc: "Real-Time Map System." },
   ];
 
-  const filteredProjects = filter === 'ALL' ? projects : projects.filter(p => p.category === filter);
+  const filteredProjects = filter === 'ALL' ? projects : projects.filter(p => p.category === filter || filter === 'ALL');
 
   useEffect(() => {
     gsap.fromTo(gridRef.current.children,
@@ -28,11 +26,11 @@ const Projects = () => {
   return (
     <div className="page-container">
       <div className="cyber-grid-overlay"></div>
-      <h1 className="page-title glitch-effect" data-text="PROJECTS">PROJECTS</h1>
+      <h1 className="page-title glitch-effect" data-text="Featured Projects">Featured Projects</h1>
 
       {/* Filter Bar */}
       <div className="filter-bar">
-        {['ALL', 'VR', 'AI', 'BLOCKCHAIN', 'UI/UX'].map((cat) => (
+        {['ALL', 'React', 'Creative', 'App', 'Web App'].map((cat) => (
           <button
             key={cat}
             className={`filter-btn ${filter === cat ? 'active' : ''}`}
@@ -54,8 +52,11 @@ const Projects = () => {
                 <div className="hologram-pulse"></div>
               </div>
               <div className="project-meta">
-                <span className="project-cat">{project.category}</span>
-                <Button variant="secondary" className="view-btn">View Data</Button>
+                <div>
+                  <span className="project-cat" style={{ display: 'block', marginBottom: '5px' }}>{project.category}</span>
+                  <p style={{ fontSize: '0.8rem', color: '#aaa' }}>{project.desc}</p>
+                </div>
+                <Button variant="secondary" className="view-btn">View</Button>
               </div>
               <div className="animated-corner top-left"></div>
               <div className="animated-corner bottom-right"></div>
