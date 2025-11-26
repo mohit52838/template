@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { X, ZoomIn } from 'lucide-react';
+import { X, ZoomIn, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -29,7 +29,10 @@ const Gallery = () => {
       <div ref={gridRef} className="masonry-grid">
         {images.map((img) => (
           <div key={img.id} className={`gallery-item ${img.type}`} onClick={() => setSelectedImage(img)}>
-            <img src={img.src} alt="Gallery Item" />
+            <div className="img-wrapper">
+              <img src={img.src} alt="Gallery Item" />
+              <div className="scan-line-anim"></div>
+            </div>
             <div className="item-overlay">
               <ZoomIn className="zoom-icon" size={32} />
               <span className="view-text">ACCESS FILE</span>
@@ -45,12 +48,17 @@ const Gallery = () => {
         <div className="lightbox" onClick={() => setSelectedImage(null)}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
             <img src={selectedImage.src} alt="Full View" />
+            <div className="lightbox-controls">
+              <button className="control-btn prev"><ChevronLeft /></button>
+              <button className="control-btn next"><ChevronRight /></button>
+            </div>
             <button className="close-btn" onClick={() => setSelectedImage(null)}>
               <X size={24} />
             </button>
             <div className="lightbox-ui">
               <div className="ui-line"></div>
-              <div className="ui-text">IMG_SEQ_00{selectedImage.id} // HIGH_RES</div>
+              <div className="ui-text">IMG_SEQ_00{selectedImage.id} // HIGH_RES // ENCRYPTED</div>
+              <div className="ui-line"></div>
             </div>
           </div>
         </div>
@@ -84,10 +92,18 @@ const Gallery = () => {
           cursor: pointer;
           border: 1px solid rgba(0, 207, 255, 0.2);
           transition: all 0.3s;
+          background: #000;
         }
 
         .gallery-item.tall {
           grid-row: span 2;
+        }
+
+        .img-wrapper {
+          width: 100%;
+          height: 100%;
+          position: relative;
+          overflow: hidden;
         }
 
         .gallery-item img {
@@ -95,10 +111,29 @@ const Gallery = () => {
           height: 100%;
           object-fit: cover;
           transition: transform 0.5s;
+          opacity: 0.8;
+        }
+
+        .scan-line-anim {
+          position: absolute;
+          top: -100%;
+          left: 0;
+          width: 100%;
+          height: 50%;
+          background: linear-gradient(to bottom, transparent, var(--accent-cyan), transparent);
+          opacity: 0.5;
+          transition: top 0.5s;
         }
 
         .gallery-item:hover img {
           transform: scale(1.1);
+          opacity: 1;
+          filter: contrast(1.2) brightness(1.2);
+        }
+
+        .gallery-item:hover .scan-line-anim {
+          top: 100%;
+          transition: top 1s;
         }
 
         .item-overlay {
@@ -115,6 +150,7 @@ const Gallery = () => {
           opacity: 0;
           transition: opacity 0.3s;
           backdrop-filter: blur(2px);
+          z-index: 2;
         }
 
         .gallery-item:hover .item-overlay {
@@ -140,6 +176,7 @@ const Gallery = () => {
           border-color: var(--accent-cyan);
           transition: all 0.3s;
           opacity: 0;
+          z-index: 3;
         }
 
         .top-left { top: 10px; left: 10px; border-top: 2px solid; border-left: 2px solid; }
@@ -147,8 +184,10 @@ const Gallery = () => {
 
         .gallery-item:hover .corner-decor {
           opacity: 1;
-          width: 25px;
-          height: 25px;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
         }
 
         /* Lightbox */
@@ -158,7 +197,7 @@ const Gallery = () => {
           left: 0;
           width: 100vw;
           height: 100vh;
-          background: rgba(0, 0, 0, 0.9);
+          background: rgba(0, 0, 0, 0.95);
           backdrop-filter: blur(10px);
           z-index: 10000;
           display: flex;
@@ -172,7 +211,8 @@ const Gallery = () => {
           max-width: 90%;
           max-height: 90%;
           border: 1px solid var(--accent-blue);
-          box-shadow: 0 0 30px rgba(0, 207, 255, 0.2);
+          box-shadow: 0 0 50px rgba(0, 207, 255, 0.2);
+          background: #000;
         }
 
         .lightbox-content img {
@@ -183,22 +223,60 @@ const Gallery = () => {
 
         .close-btn {
           position: absolute;
-          top: -40px;
-          right: -40px;
+          top: -50px;
+          right: -50px;
           background: transparent;
-          border: none;
-          color: #fff;
+          border: 1px solid var(--accent-blue);
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--accent-blue);
           cursor: pointer;
-          transition: color 0.3s;
+          transition: all 0.3s;
         }
 
         .close-btn:hover {
-          color: var(--accent-cyan);
+          background: var(--accent-blue);
+          color: #000;
+          box-shadow: 0 0 15px var(--accent-blue);
+        }
+
+        .lightbox-controls {
+          position: absolute;
+          top: 50%;
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          transform: translateY(-50%);
+          pointer-events: none;
+        }
+
+        .control-btn {
+          pointer-events: auto;
+          background: rgba(0, 0, 0, 0.5);
+          border: 1px solid var(--accent-blue);
+          color: var(--accent-blue);
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s;
+          margin: 0 -60px;
+        }
+
+        .control-btn:hover {
+          background: var(--accent-blue);
+          color: #000;
         }
 
         .lightbox-ui {
           position: absolute;
-          bottom: -30px;
+          bottom: -40px;
           left: 0;
           width: 100%;
           display: flex;
@@ -210,12 +288,14 @@ const Gallery = () => {
           flex-grow: 1;
           height: 1px;
           background: var(--accent-blue);
+          box-shadow: 0 0 5px var(--accent-blue);
         }
 
         .ui-text {
           font-family: var(--font-header);
-          color: var(--accent-blue);
+          color: var(--accent-cyan);
           font-size: 0.8rem;
+          text-shadow: 0 0 5px var(--accent-cyan);
         }
       `}</style>
     </div>

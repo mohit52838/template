@@ -27,6 +27,7 @@ const Projects = () => {
 
   return (
     <div className="page-container">
+      <div className="cyber-grid-overlay"></div>
       <h1 className="page-title glitch-effect" data-text="PROJECTS">PROJECTS</h1>
 
       {/* Filter Bar */}
@@ -37,7 +38,8 @@ const Projects = () => {
             className={`filter-btn ${filter === cat ? 'active' : ''}`}
             onClick={() => setFilter(cat)}
           >
-            {cat}
+            <span className="btn-text">{cat}</span>
+            <div className="btn-glitch"></div>
           </button>
         ))}
       </div>
@@ -45,15 +47,20 @@ const Projects = () => {
       {/* Projects Grid */}
       <div ref={gridRef} className="projects-grid">
         {filteredProjects.map((project) => (
-          <Card key={project.id} title={project.title} className="project-card">
-            <div className="project-thumb" style={{ backgroundImage: `url(${project.img})` }}>
-              <div className="scan-overlay"></div>
-            </div>
-            <div className="project-meta">
-              <span className="project-cat">{project.category}</span>
-              <Button variant="secondary" className="view-btn">View Data</Button>
-            </div>
-          </Card>
+          <div key={project.id} className="project-card-wrapper">
+            <Card title={project.title} className="project-card">
+              <div className="project-thumb" style={{ backgroundImage: `url(${project.img})` }}>
+                <div className="scan-overlay"></div>
+                <div className="hologram-pulse"></div>
+              </div>
+              <div className="project-meta">
+                <span className="project-cat">{project.category}</span>
+                <Button variant="secondary" className="view-btn">View Data</Button>
+              </div>
+              <div className="animated-corner top-left"></div>
+              <div className="animated-corner bottom-right"></div>
+            </Card>
+          </div>
         ))}
       </div>
 
@@ -63,6 +70,21 @@ const Projects = () => {
           max-width: 1200px;
           margin: 0 auto;
           min-height: 100vh;
+          position: relative;
+        }
+
+        .cyber-grid-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: 
+            linear-gradient(rgba(0, 207, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 207, 255, 0.05) 1px, transparent 1px);
+          background-size: 20px 20px;
+          pointer-events: none;
+          z-index: -1;
         }
 
         .page-title {
@@ -81,7 +103,7 @@ const Projects = () => {
         }
 
         .filter-btn {
-          background: transparent;
+          background: rgba(0, 0, 0, 0.5);
           border: 1px solid var(--glass-border);
           color: #888;
           padding: 10px 25px;
@@ -90,18 +112,25 @@ const Projects = () => {
           transition: all 0.3s;
           text-transform: uppercase;
           letter-spacing: 1px;
+          position: relative;
+          overflow: hidden;
         }
 
         .filter-btn:hover, .filter-btn.active {
           color: var(--accent-cyan);
           border-color: var(--accent-cyan);
           box-shadow: 0 0 15px rgba(4, 247, 255, 0.3);
+          background: rgba(4, 247, 255, 0.1);
         }
 
         .projects-grid {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
           gap: 40px;
+        }
+
+        .project-card-wrapper {
+          perspective: 1000px;
         }
 
         .project-thumb {
@@ -111,6 +140,7 @@ const Projects = () => {
           margin-bottom: 20px;
           position: relative;
           border: 1px solid var(--glass-border);
+          overflow: hidden;
         }
 
         .scan-overlay {
@@ -122,6 +152,24 @@ const Projects = () => {
           background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.5) 50%);
           background-size: 100% 4px;
           opacity: 0.5;
+          pointer-events: none;
+        }
+
+        .hologram-pulse {
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 50%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(0, 207, 255, 0.2), transparent);
+          transform: skewX(-20deg);
+          animation: holoPulse 3s infinite;
+        }
+
+        @keyframes holoPulse {
+          0% { left: -100%; }
+          20% { left: 200%; }
+          100% { left: 200%; }
         }
 
         .project-meta {
@@ -139,6 +187,37 @@ const Projects = () => {
         .view-btn {
           padding: 8px 20px !important;
           font-size: 0.8rem !important;
+        }
+
+        /* Animated Corners */
+        .animated-corner {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          border-color: var(--accent-cyan);
+          transition: all 0.3s;
+          opacity: 0.5;
+        }
+
+        .top-left {
+          top: -2px;
+          left: -2px;
+          border-top: 2px solid;
+          border-left: 2px solid;
+        }
+
+        .bottom-right {
+          bottom: -2px;
+          right: -2px;
+          border-bottom: 2px solid;
+          border-right: 2px solid;
+        }
+
+        .project-card-wrapper:hover .animated-corner {
+          width: 100%;
+          height: 100%;
+          opacity: 1;
+          box-shadow: inset 0 0 20px rgba(0, 207, 255, 0.1);
         }
       `}</style>
     </div>

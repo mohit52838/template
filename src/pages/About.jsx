@@ -26,12 +26,14 @@ const About = () => {
             );
         });
 
-        // Skills Grid Animation
-        gsap.from(".skill-tile", {
+        // Skills Grid Animation (Hexagons)
+        gsap.from(".hex-skill", {
             scale: 0,
             opacity: 0,
-            duration: 0.5,
+            rotation: 180,
+            duration: 0.8,
             stagger: 0.1,
+            ease: "back.out(1.7)",
             scrollTrigger: {
                 trigger: ".skills-grid",
                 start: "top 80%"
@@ -42,7 +44,7 @@ const About = () => {
     return (
         <div ref={pageRef} className="page-container">
             {/* Intro Block */}
-            <section className="about-intro">
+            <section className="about-intro neon-border-left">
                 <div className="intro-text">
                     <h1 className="page-title glitch-effect" data-text="ABOUT NEONTECH">ABOUT NEONTECH</h1>
                     <p className="lead">Pioneering the digital frontier since 2042.</p>
@@ -69,14 +71,17 @@ const About = () => {
                 </div>
             </section>
 
-            {/* Skills Grid */}
-            <section className="skills-section">
+            {/* Skills Grid (Hexagons) */}
+            <section className="skills-section neon-border-right">
                 <h2 className="section-title neon-text-purple">CORE CAPABILITIES</h2>
                 <div className="skills-grid">
                     {['AI', 'VR/AR', 'QUANTUM', 'BLOCKCHAIN', 'CYBERSEC', 'NEURAL', 'HOLO', 'NANO', 'BIO'].map((skill) => (
-                        <div key={skill} className="skill-tile">
-                            <span className="skill-text">{skill}</span>
-                            <div className="skill-glow"></div>
+                        <div key={skill} className="hex-skill-wrapper">
+                            <div className="hex-skill">
+                                <div className="hex-inner">
+                                    <span className="skill-text">{skill}</span>
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -104,6 +109,40 @@ const About = () => {
           margin: 0 auto;
         }
 
+        .neon-border-left {
+          border-left: 2px solid var(--accent-blue);
+          padding-left: 40px;
+          position: relative;
+        }
+        
+        .neon-border-left::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -2px;
+          width: 2px;
+          height: 50%;
+          background: var(--accent-cyan);
+          box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        .neon-border-right {
+          border-right: 2px solid var(--accent-purple);
+          padding-right: 40px;
+          position: relative;
+        }
+
+        .neon-border-right::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          right: -2px;
+          width: 2px;
+          height: 50%;
+          background: var(--accent-blue);
+          box-shadow: 0 0 10px var(--accent-blue);
+        }
+
         .about-intro {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -111,6 +150,7 @@ const About = () => {
           align-items: center;
           padding: 50px 20px;
           margin-bottom: 100px;
+          background: linear-gradient(90deg, rgba(0, 207, 255, 0.05), transparent);
         }
 
         .page-title {
@@ -166,10 +206,34 @@ const About = () => {
         .timeline-item.right { left: 50%; text-align: left; }
 
         .timeline-content {
-          background: var(--glass-bg);
+          background: rgba(0, 0, 0, 0.8);
           padding: 20px;
-          border: 1px solid var(--glass-border);
-          border-radius: 10px;
+          border: 1px solid var(--accent-blue);
+          border-radius: 0;
+          position: relative;
+          box-shadow: 0 0 15px rgba(0, 207, 255, 0.1);
+        }
+        
+        .timeline-content::before {
+          content: '';
+          position: absolute;
+          top: -2px;
+          left: -2px;
+          width: 10px;
+          height: 10px;
+          border-top: 2px solid var(--accent-cyan);
+          border-left: 2px solid var(--accent-cyan);
+        }
+
+        .timeline-content::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          right: -2px;
+          width: 10px;
+          height: 10px;
+          border-bottom: 2px solid var(--accent-cyan);
+          border-right: 2px solid var(--accent-cyan);
         }
 
         .timeline-node {
@@ -187,40 +251,60 @@ const About = () => {
         .left .timeline-node { right: -10px; }
         .right .timeline-node { left: -10px; }
 
-        /* Skills Grid */
+        /* Hex Skills Grid */
         .skills-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
           gap: 20px;
-          max-width: 800px;
+          max-width: 900px;
           margin: 0 auto 100px;
         }
 
-        .skill-tile {
-          aspect-ratio: 1;
+        .hex-skill-wrapper {
+          width: 120px;
+          height: 104px; /* width * 0.866 */
+          position: relative;
+        }
+
+        .hex-skill {
+          width: 100%;
+          height: 100%;
+          background: var(--accent-purple);
+          clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
           display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(0, 0, 0, 0.5);
-          border: 1px solid var(--accent-purple);
-          position: relative;
-          overflow: hidden;
+          transition: all 0.3s;
+          cursor: pointer;
+        }
+
+        .hex-inner {
+          width: 96%;
+          height: 96%;
+          background: #000;
+          clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
           transition: all 0.3s;
         }
 
-        .skill-tile:hover {
-          background: var(--accent-purple);
-          box-shadow: 0 0 20px var(--accent-purple);
+        .hex-skill:hover {
+          filter: drop-shadow(0 0 10px var(--accent-purple));
+          transform: scale(1.1);
+        }
+
+        .hex-skill:hover .hex-inner {
+          background: rgba(108, 92, 231, 0.2);
         }
 
         .skill-text {
           font-family: var(--font-header);
           font-weight: 700;
+          font-size: 0.8rem;
+          color: #fff;
           z-index: 2;
-        }
-
-        .skill-tile:hover .skill-text {
-          color: #000;
         }
 
         /* Stats */
