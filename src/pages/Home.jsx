@@ -1,34 +1,119 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { TextPlugin } from 'gsap/TextPlugin';
 import Button from '../components/Button';
 import Card from '../components/Card';
 import HologramReveal from '../components/HologramReveal';
 import { Link } from 'react-router-dom';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
 const Home = () => {
   const heroRef = useRef(null);
+  const gridRef = useRef(null);
+  const particlesRef = useRef(null);
+  const contentRef = useRef(null);
   const titleRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const uiRef = useRef(null);
   const sliderRef = useRef(null);
 
   useEffect(() => {
-    // Hero Parallax & Glitch
+    // 1. Initial Neon Surge (Load Animation)
     const tl = gsap.timeline();
-    tl.fromTo(titleRef.current,
-      { opacity: 0, scale: 1.2, filter: "blur(10px)" },
-      { opacity: 1, scale: 1, filter: "blur(0px)", duration: 2, ease: "power4.out" }
-    );
 
-    gsap.to(".hero-particles", {
-      y: -100,
-      scrollTrigger: {
-        trigger: heroRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: true
-      }
+    tl.to(heroRef.current, { opacity: 1, duration: 0.1 })
+      .fromTo(gridRef.current,
+        { scale: 2, opacity: 0, rotationX: 90 },
+        { scale: 1, opacity: 0.4, rotationX: 60, duration: 2, ease: "power4.out" }
+      )
+      .fromTo(titleRef.current,
+        { opacity: 0, scale: 1.5, textShadow: "0 0 0px #000" },
+        { opacity: 1, scale: 1, textShadow: "0 0 50px var(--accent-blue)", duration: 1.5, ease: "elastic.out(1, 0.3)" },
+        "-=1.5"
+      )
+      .to(subtitleRef.current, {
+        duration: 2,
+        text: {
+          value: "TRANSCENDING BOUNDARIES WITH HOLOGRAPHIC INTERFACES AND QUANTUM COMPUTING.",
+          delimiter: ""
+        },
+        ease: "none",
+        onUpdate: function () {
+          // Glitch effect during typing
+          if (Math.random() > 0.9) {
+            this.targets()[0].style.textShadow = `${Math.random() * 10 - 5}px ${Math.random() * 10 - 5}px 0 #ff00c1`;
+          } else {
+            this.targets()[0].style.textShadow = "none";
+          }
+        }
+      }, "-=1");
+
+    // 2. Parallax Effect
+    const handleMouseMove = (e) => {
+      const { clientX, clientY } = e;
+      const xPos = (clientX / window.innerWidth - 0.5);
+      const yPos = (clientY / window.innerHeight - 0.5);
+
+      gsap.to(gridRef.current, {
+        rotationX: 60 + yPos * 5,
+        rotationY: xPos * 5,
+        x: xPos * 20,
+        duration: 1
+      });
+
+      gsap.to(particlesRef.current, {
+        x: xPos * 50,
+        y: yPos * 50,
+        duration: 1.5
+      });
+
+      gsap.to(contentRef.current, {
+        x: xPos * -20,
+        y: yPos * -20,
+        duration: 1
+      });
+
+      gsap.to(uiRef.current, {
+        x: xPos * -40,
+        y: yPos * -40,
+        rotation: xPos * 10,
+        duration: 2
+      });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+
+    // 3. Continuous Animations
+    // Particles
+    const particles = particlesRef.current.children;
+    Array.from(particles).forEach((p, i) => {
+      gsap.to(p, {
+        y: -window.innerHeight,
+        duration: "random(5, 10)",
+        repeat: -1,
+        ease: "none",
+        delay: "random(0, 5)"
+      });
+    });
+
+    // Neon Flicker for Title
+    gsap.to(titleRef.current, {
+      opacity: "random(0.8, 1)",
+      textShadow: "random(0 0 20px var(--accent-blue), 0 0 50px var(--accent-blue))",
+      duration: 0.1,
+      repeat: -1,
+      yoyo: true,
+      repeatRefresh: true
+    });
+
+    // UI Rings Rotation
+    gsap.to(".ui-ring", {
+      rotation: 360,
+      duration: 20,
+      repeat: -1,
+      ease: "linear"
     });
 
     // Horizontal Scroll for Projects
@@ -48,39 +133,56 @@ const Home = () => {
       });
     }
 
-    // Hologram Card Hover Effect (Light Burst)
-    const cards = document.querySelectorAll('.highlight-card');
-    cards.forEach(card => {
-      card.addEventListener('mouseenter', () => {
-        gsap.to(card, { boxShadow: "0 0 50px var(--accent-cyan), inset 0 0 20px var(--accent-cyan)", duration: 0.3 });
-      });
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, { boxShadow: "none", duration: 0.5 });
-      });
-    });
-
     return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);
 
   return (
     <div className="home-page">
-      {/* Hero Section */}
+      {/* HERO SECTION */}
       <section ref={heroRef} className="hero-section">
-        <div className="tron-grid-floor"></div>
-        <div className="hero-content">
-          <h1 ref={titleRef} className="hero-title glitch-effect" data-text="THE FUTURE. REINVENTED.">
+        {/* Layer 1: Black Base (CSS background) */}
+
+        {/* Layer 2: TRON Grid */}
+        <div ref={gridRef} className="layer-grid">
+          <div className="grid-plane"></div>
+        </div>
+
+        {/* Layer 3: Hologram Particles */}
+        <div ref={particlesRef} className="layer-particles">
+          {[...Array(20)].map((_, i) => (
+            <div key={i} className="holo-particle" style={{
+              left: `${Math.random() * 100}%`,
+              top: '100%',
+              scale: Math.random() * 0.5 + 0.5,
+              opacity: Math.random() * 0.5 + 0.2
+            }}></div>
+          ))}
+        </div>
+
+        {/* Layer 4: Digital Noise/Scanlines */}
+        <div className="layer-noise"></div>
+
+        {/* Cyber UI Elements */}
+        <div ref={uiRef} className="hero-ui">
+          <div className="ui-hex hex-1"></div>
+          <div className="ui-hex hex-2"></div>
+          <div className="ui-ring ring-1"></div>
+          <div className="ui-circuit circuit-1"></div>
+        </div>
+
+        {/* Content Layer */}
+        <div ref={contentRef} className="hero-content">
+          <h1 ref={titleRef} className="hero-title">
             THE FUTURE.<br />REINVENTED.
           </h1>
-          <p className="hero-subtitle">
-            Transcending boundaries with holographic interfaces and quantum computing.
-          </p>
+          <p ref={subtitleRef} className="hero-subtitle"></p>
           <div className="hero-actions">
-            <Button variant="primary">Initialize System</Button>
+            <Button variant="primary">INITIALIZE SYSTEM</Button>
           </div>
         </div>
-        <div className="hero-particles"></div>
       </section>
 
       {/* Tech Highlights */}
@@ -150,65 +252,166 @@ const Home = () => {
       <style jsx>{`
         .home-page {
           overflow-x: hidden;
+          background: #000;
         }
 
-        /* Hero */
+        /* HERO SECTION */
         .hero-section {
           height: 100vh;
+          width: 100vw;
+          position: relative;
+          overflow: hidden;
           display: flex;
           align-items: center;
           justify-content: center;
-          position: relative;
-          z-index: 10;
           perspective: 1000px;
-          overflow: hidden;
+          opacity: 0; /* For fade-in */
         }
 
-        .tron-grid-floor {
+        /* Layer 2: TRON Grid */
+        .layer-grid {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          transform-style: preserve-3d;
+        }
+
+        .grid-plane {
           position: absolute;
           bottom: -50%;
           left: -50%;
           width: 200%;
-          height: 100%;
+          height: 200%;
           background-image: 
             linear-gradient(var(--accent-blue) 1px, transparent 1px),
             linear-gradient(90deg, var(--accent-blue) 1px, transparent 1px);
-          background-size: 50px 50px;
-          transform: rotateX(60deg);
+          background-size: 60px 60px;
           opacity: 0.2;
-          animation: gridScroll 20s linear infinite;
-          z-index: -1;
+          mask-image: linear-gradient(to top, black 40%, transparent 100%);
         }
 
-        @keyframes gridScroll {
-          0% { transform: rotateX(60deg) translateY(0); }
-          100% { transform: rotateX(60deg) translateY(50px); }
+        /* Layer 3: Particles */
+        .layer-particles {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 2;
+          pointer-events: none;
+        }
+
+        .holo-particle {
+          position: absolute;
+          width: 4px;
+          height: 4px;
+          background: var(--accent-cyan);
+          border-radius: 50%;
+          box-shadow: 0 0 10px var(--accent-cyan);
+        }
+
+        /* Layer 4: Noise/Scanlines */
+        .layer-noise {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 4;
+          background: repeating-linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.15),
+            rgba(0, 0, 0, 0.15) 1px,
+            transparent 1px,
+            transparent 2px
+          );
+          pointer-events: none;
+        }
+
+        /* Cyber UI */
+        .hero-ui {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 3;
+          pointer-events: none;
+        }
+
+        .ui-hex {
+          position: absolute;
+          width: 100px;
+          height: 115px;
+          border: 1px solid var(--accent-purple);
+          clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+          opacity: 0.3;
+        }
+        .hex-1 { top: 20%; left: 10%; }
+        .hex-2 { bottom: 20%; right: 10%; }
+
+        .ui-ring {
+          position: absolute;
+          border: 1px dashed var(--accent-cyan);
+          border-radius: 50%;
+          opacity: 0.2;
+        }
+        .ring-1 {
+          width: 600px;
+          height: 600px;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+
+        .ui-circuit {
+          position: absolute;
+          top: 10%;
+          right: 20%;
+          width: 200px;
+          height: 2px;
+          background: var(--accent-blue);
+          box-shadow: 0 0 10px var(--accent-blue);
+        }
+
+        /* Content */
+        .hero-content {
+          position: relative;
+          z-index: 5;
+          text-align: center;
+          max-width: 800px;
         }
 
         .hero-title {
           font-size: 6rem;
-          line-height: 1;
+          line-height: 0.9;
           margin-bottom: 2rem;
           color: #fff;
-          text-align: center;
           font-weight: 900;
-          text-shadow: 0 0 20px var(--accent-cyan);
+          font-family: var(--font-header);
+          letter-spacing: -2px;
         }
 
         .hero-subtitle {
-          font-size: 1.5rem;
-          color: #aaa;
-          text-align: center;
-          max-width: 600px;
+          font-size: 1.2rem;
+          color: var(--accent-cyan);
           margin: 0 auto 3rem;
-          position: relative;
+          font-family: 'Courier New', monospace;
+          min-height: 1.5em; /* Prevent layout shift */
+          letter-spacing: 2px;
         }
 
-        /* Tech Highlights */
+        /* Tech Highlights (Existing styles preserved/enhanced) */
         .tech-highlights {
           padding: 100px 5%;
           max-width: 1400px;
           margin: 0 auto;
+          position: relative;
+          z-index: 10;
+          background: #000;
         }
 
         .section-header {
@@ -364,12 +567,40 @@ const Home = () => {
           background: linear-gradient(to bottom, transparent, var(--accent-blue));
         }
 
+        .about-preview {
+          padding: 100px 5%;
+          background: linear-gradient(90deg, transparent, rgba(108, 92, 231, 0.05), transparent);
+        }
+
+        .about-split {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 80px;
+          align-items: center;
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+
+        .about-text h2 {
+          font-size: 3rem;
+          margin-bottom: 30px;
+          font-family: var(--font-header);
+        }
+
+        .about-text p {
+          font-size: 1.2rem;
+          color: #ccc;
+          margin-bottom: 40px;
+          line-height: 1.8;
+        }
+
         @media (max-width: 768px) {
           .hero-title { font-size: 3rem; }
           .about-split { grid-template-columns: 1fr; }
           .projects-preview { height: auto; padding: 100px 0; }
           .projects-slider { flex-direction: column; width: 100%; padding: 0 20px; }
           .project-slide { width: 100%; height: auto; }
+          .ui-ring { width: 300px; height: 300px; }
         }
       `}</style>
     </div>
