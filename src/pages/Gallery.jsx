@@ -7,12 +7,12 @@ const Gallery = () => {
   const gridRef = useRef(null);
 
   const images = [
-    { id: 1, src: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop", type: "wide" },
-    { id: 2, src: "https://images.unsplash.com/photo-1515630278258-407f66498911?q=80&w=1000&auto=format&fit=crop", type: "tall" },
-    { id: 3, src: "https://images.unsplash.com/photo-1558494949-efdeb6bf80d1?q=80&w=1000&auto=format&fit=crop", type: "wide" },
-    { id: 4, src: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?q=80&w=1000&auto=format&fit=crop", type: "tall" },
-    { id: 5, src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop", type: "wide" },
-    { id: 6, src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop", type: "tall" },
+    { id: 1, src: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop", type: "wide", title: "Neon-themed UI Concepts" },
+    { id: 2, src: "https://images.unsplash.com/photo-1515630278258-407f66498911?q=80&w=1000&auto=format&fit=crop", type: "tall", title: "Futuristic Layout Explorations" },
+    { id: 3, src: "https://images.unsplash.com/photo-1558494949-efdeb6bf80d1?q=80&w=1000&auto=format&fit=crop", type: "wide", title: "Animation Tests & Motion Studies" },
+    { id: 4, src: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?q=80&w=1000&auto=format&fit=crop", type: "tall", title: "Cyber Grid Background Experiments" },
+    { id: 5, src: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000&auto=format&fit=crop", type: "wide", title: "Prototype Screens of New Projects" },
+    { id: 6, src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop", type: "tall", title: "Visual Experiments" },
   ];
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const Gallery = () => {
             </div>
             <div className="item-overlay">
               <ZoomIn className="zoom-icon" size={32} />
-              <span className="view-text">ACCESS FILE</span>
+              <span className="view-text">{img.title}</span>
             </div>
             <div className="corner-decor top-left"></div>
             <div className="corner-decor bottom-right"></div>

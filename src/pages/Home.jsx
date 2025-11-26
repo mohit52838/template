@@ -171,6 +171,15 @@ const Home = () => {
           <div className="ui-hex hex-2"></div>
           <div className="ui-ring ring-1"></div>
         </div>
+
+        <div ref={contentRef} className="hero-content">
+          <h1 ref={titleRef} className="hero-title">Crafting the Future,<br />One Line of Code at a Time.</h1>
+          <p ref={subtitleRef} className="hero-subtitle">Blending imagination with technology to build immersive, futuristic digital experiences.</p>
+          <div className="hero-cta">
+            <Link to="/projects"><Button variant="primary">Explore My Work</Button></Link>
+            <Link to="/about"><Button variant="secondary">About Me</Button></Link>
+          </div>
+        </div>
       </section>
 
       <section className="tech-highlights">

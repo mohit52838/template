@@ -44,20 +44,27 @@ const About = () => {
     const skills = [
         { name: "React.js", desc: "Dynamic Interface Engine" },
         { name: "Next.js", desc: "High-Performance Framework" },
-        { name: "Node.js", desc: "Server-Side Logic Core" },
-        { name: "Three.js", desc: "3D Visual Projection" },
-        { name: "GSAP", desc: "Advanced Motion Systems" },
-        { name: "Tailwind", desc: "Rapid Styling Protocol" }
+        { name: "TailwindCSS", desc: "Utility-First Styling" },
+        { name: "GSAP", desc: "Animation & Motion Control" },
+        { name: "Framer Motion", desc: "Microinteractions & UI Motion" },
+        { name: "JS / TS", desc: "Core Logic Systems" },
+        { name: "Python", desc: "Backend & Automation" },
+        { name: "Git & GitHub", desc: "Version Control Protocol" }
     ];
 
     return (
         <div className="about-page" ref={pageRef}>
             <div className="about-intro">
                 <div className="neon-border-left">
-                    <h1 className="page-title neon-text-cyan">ABOUT ME</h1>
+                    <h1 className="page-title neon-text-cyan">About Me</h1>
                     <p className="lead">
-                        I am a digital architect, crafting immersive experiences at the intersection of art and code.
-                        Specializing in futuristic interfaces and high-performance web applications.
+                        I’m Mohit, a developer obsessed with futuristic interfaces, neon aesthetics, and building digital experiences that feel alive. I love mixing animation, interactivity, and technology to create cyber-themed, immersive websites.
+                    </p>
+                    <br />
+                    <p style={{ color: '#ccc', lineHeight: '1.6' }}>
+                        I specialize in creating modern, interactive, and animated web experiences using React, Next.js, Tailwind, and GSAP. My work blends technology with visual storytelling — turning ordinary pages into futuristic environments. From neon-lit UI elements to hologram-inspired interactions, I’m constantly exploring new ways to bring creativity into development.
+                        <br /><br />
+                        Right now, I'm learning advanced UI/UX concepts, animation systems, 3D-like effects, and scalable front-end architecture so I can build visually stunning digital products.
                     </p>
                 </div>
                 <div className="neon-border-right">
@@ -94,7 +101,7 @@ const About = () => {
             </div>
 
             <div className="skills-section">
-                <h2 className="section-title neon-text-purple">TECH ARSENAL</h2>
+                <h2 className="section-title neon-text-purple">Tech Arsenal</h2>
                 <div className="skills-grid">
                     {skills.map((skill, i) => (
                         <div className="hex-skill-wrapper" key={i}>
@@ -111,16 +118,20 @@ const About = () => {
             <div className="stats-section">
                 <div className="stats-grid">
                     <div className="stat-item">
-                        <div className="stat-value neon-text-cyan">50+</div>
-                        <div className="stat-label">Projects Deployed</div>
+                        <div className="stat-value neon-text-cyan">2+</div>
+                        <div className="stat-label">Years of Learning & Building</div>
                     </div>
                     <div className="stat-item">
-                        <div className="stat-value neon-text-purple">100%</div>
-                        <div className="stat-label">Client Satisfaction</div>
+                        <div className="stat-value neon-text-purple">15+</div>
+                        <div className="stat-label">Completed Mini Projects</div>
                     </div>
                     <div className="stat-item">
-                        <div className="stat-value neon-text-blue">∞</div>
-                        <div className="stat-label">Lines of Code</div>
+                        <div className="stat-value neon-text-blue">8+</div>
+                        <div className="stat-label">Technologies Used</div>
+                    </div>
+                    <div className="stat-item">
+                        <div className="stat-value neon-text-cyan">∞</div>
+                        <div className="stat-label">Curiosity & Experimentation</div>
                     </div>
                 </div>
             </div>
