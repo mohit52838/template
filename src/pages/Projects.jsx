@@ -8,10 +8,10 @@ const Projects = () => {
   const gridRef = useRef(null);
 
   const projects = [
-    { id: 1, title: "Neon Portfolio V2", category: "React", img: "https://images.unsplash.com/photo-1515630278258-407f66498911?q=80&w=1000&auto=format&fit=crop", desc: "A fully animated futuristic portfolio featuring neon accents, parallax grids, hologram cards, and cinematic interactions. Designed to feel like a TRON-inspired operating system.", tech: "React, Tailwind, GSAP" },
-    { id: 2, title: "Mandala Maker", category: "Creative", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop", desc: "An interactive drawing tool that lets users create symmetric mandala artwork using real-time reflection, gradient strokes, and mirrored patterns.", tech: "React, p5.js, Tailwind" },
-    { id: 3, title: "SmartConnect", category: "App", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop", desc: "A community-driven app providing services, resources, and digital tools for rural citizens — built with a clean UI and scalable React architecture.", tech: "React, Tailwind, API Integration" },
-    { id: 4, title: "Disaster Management", category: "Web App", img: "https://images.unsplash.com/photo-1558494949-efdeb6bf80d1?q=80&w=1000&auto=format&fit=crop", desc: "A web application that lets users report disasters, view real-time maps, access emergency contacts, and assist authorities with on-ground data.", tech: "React, Maps API, Custom Backend" },
+    { id: 1, title: "Neon Portfolio V2", category: "React", img: "https://images.unsplash.com/photo-1515630278258-407f66498911?q=80&w=1000&auto=format&fit=crop", desc: "Cyber Interface", tech: "React, Tailwind, GSAP" },
+    { id: 2, title: "Mandala Maker", category: "Creative", img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop", desc: "Symmetry Art Generator", tech: "React, p5.js, Tailwind" },
+    { id: 3, title: "SmartConnect", category: "App", img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop", desc: "Digital Empowerment Platform", tech: "React, Tailwind, API Integration" },
+    { id: 4, title: "Disaster Management", category: "Web App", img: "https://images.unsplash.com/photo-1558494949-efdeb6bf80d1?q=80&w=1000&auto=format&fit=crop", desc: "Real-Time Map System", tech: "React, Maps API, Custom Backend" },
   ];
 
   const filteredProjects = filter === 'ALL' ? projects : projects.filter(p => p.category === filter || filter === 'ALL');

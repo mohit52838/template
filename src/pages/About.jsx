@@ -47,9 +47,9 @@ const About = () => {
         { name: "TailwindCSS", desc: "Utility-First Styling" },
         { name: "GSAP", desc: "Animation & Motion Control" },
         { name: "Framer Motion", desc: "Microinteractions & UI Motion" },
-        { name: "JS / TS", desc: "Core Logic Systems" },
+        { name: "JavaScript/TypeScript", desc: "Core Logic Systems" },
         { name: "Python", desc: "Backend & Automation" },
-        { name: "Git & GitHub", desc: "Version Control Protocol" }
+        { name: "Git/GitHub", desc: "Version Control Protocol" }
     ];
 
     return (

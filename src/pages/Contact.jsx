@@ -84,9 +84,9 @@ const Contact = () => {
             <p className="coord-text">35.6762° N, 139.6503° E</p>
             <p className="coord-text">NEO-TOKYO // LEVEL 4</p>
             <div className="social-links">
-              <a href="#" className="social-link">TWITTER_LINK</a>
-              <a href="#" className="social-link">GITHUB_REPO</a>
-              <a href="#" className="social-link">LINKEDIN_NET</a>
+              <a href="#" className="social-link">TWITTER</a>
+              <a href="#" className="social-link">GITHUB</a>
+              <a href="#" className="social-link">LINKEDIN</a>
             </div>
           </div>
         </div>
